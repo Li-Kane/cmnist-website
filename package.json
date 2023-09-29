@@ -25,6 +25,8 @@
 	"type": "module",
 	"dependencies": {
 		"@tensorflow/tfjs": "^4.11.0",
-		"@tensorflow/tfjs-node": "^4.11.0"
+		"@tensorflow/tfjs-node": "^4.11.0",
+		"chart.js": "^4.4.0",
+		"pnpm": "^8.8.0"
 	}
 }
