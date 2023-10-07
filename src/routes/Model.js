@@ -1,9 +1,9 @@
 import * as tf from '@tensorflow/tfjs'
 
 class Model {
-	labels = ['N/A', '零', '一', '二', '三', '四',
-                    '五', '六', '七', '八', '九',
-                    '十', '百', '千', '万', '亿'];
+	labels = ['零', '一', '二', '三', '四',
+                '五', '六', '七', '八', '九',
+                '十', '百', '千', '万', '亿'];
 
     constructor(){
         this.loadModel();
@@ -20,9 +20,14 @@ class Model {
 	}
 
     getScores = (input) => {
-		let scores = this.model.predict(input);
-		scores = scores.softmax();
-		return scores;
+		try {
+			let scores = this.model.predict(input);
+			scores = scores.softmax();
+			return scores;
+		} catch(e) {
+			console.log('Issues with getting scores!');
+			console.log(e);
+		}
 	}
 
 	getPrediction = (scores) => {

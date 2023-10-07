@@ -31,7 +31,7 @@
 		const resizedContext = resizedCanvas.getContext('2d');
     	resizedContext.drawImage(originalCanvas, 0, 0, 64, 64);
 		const imageData = resizedContext.getImageData(0, 0, 64, 64);
-		//visualize resized if you want
+		//This block is to visualize the resized image input
 		/*
 		const context = originalCanvas.getContext('2d');
 		context.strokeRect(0, 0, 64, 64);
@@ -39,12 +39,9 @@
 		*/
 		//reshape data into (1, 64, 64, 3) tensor
 		let reshapedData = reshapeData(imageData);
-		try{
-			scores = model.getScores(reshapedData);
+		scores = model.getScores(reshapedData);
+		if(scores){
 			displayChart = true;
-		} catch(e) {
-			console.log("Issues in the prediction!");
-			console.log(e);
 		}
 	}
 
@@ -58,7 +55,12 @@
 </script>
 
 <main>
-	<h1 id='header' class="text-5xl font-extrabold dark:text-white">CMNIST Predictor</h1>
+	<div id='header'>
+		<h1 class="text-5xl font-extrabold dark:text-white">CMNIST Predictor</h1>
+		<p>Draw a character and a convolutional neural network will make a prediction!
+			It will attempt to classify according to the classes in the slider below.
+		</p>
+	</div>
 	<Marquee class='image-slider' pauseOnHover={true} speed={50} 
 	play={true} gradient={true} --gradientColor='#e5e5e5'>
 		{#each preloadImageUrls as path, index}
@@ -94,19 +96,14 @@
 		</div>
 		<Chart {scores}/>
 	{/if}
-	<button id='about-btn' class="text-white font-bold py-2 px-4 rounded">
-		<img class="fill-current w-4 h-4 mr-2" src='/icons/down-arrow.svg' alt='downarrow'>
-		<span>About</span>
-	</button>
-
-	<p>Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a></p>
+	<p id='credit'>Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a></p>
 </main>
 
-<style lang='scss'>	
+<style>	
 	:global(body) {
 		margin: 0;
 		padding: 0;
-		min-height: 100vh;
+		min-height: 100%;
 		display: flex;
 		justify-content: center;
 		background: #e5e5e5;
@@ -136,9 +133,14 @@
 	}
 
 	#header {
-		padding: 10vh 0px 5vh;
-		color: #800020;
+		padding: 10vh 0px 2vh;
 		align-self: center;
+		text-align: center;
+	}
+
+	#header h1 {
+		padding-bottom: 1vh;
+		color: #800020;
 	}
 
 	.drawing {
@@ -151,18 +153,24 @@
 	.character{
 		width: 70px;
 		border: 3px solid #000000;
+	}
 
-		img {
-			height: 60px;
-			width: 100%;
-			border-bottom: 3px solid #000000;
-		}
+	#credit {
+		position: absolute;
+		bottom: 2%;
+		right: 2%;
+	}
 
-		.label {
-			width: 100%;
-			text-align: center;
-			background-color: white;
-		}
+	.character img {
+		height: 60px;
+		width: 100%;
+		border-bottom: 3px solid #000000;
+	}
+
+	.character .label {
+		width: 100%;
+		text-align: center;
+		background-color: white;
 	}
 
 	.prediction {
@@ -174,16 +182,7 @@
 		background-color: #800020;
 	}
 
-	#prediction-btn:hover, #about-btn:hover {
+	#prediction-btn:hover {
 		background-color: #d50a3d;
-	}
-
-	#about-btn {
-		background-color: #800020;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		width: 100px;
 	}
 </style>
