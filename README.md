@@ -81,6 +81,9 @@ _________________________________________________________________
 ## Other Key Points
 - Inside of `website/static/model` is the imported Convolutional Neural Network, where `model.json` describes the model and `group1-shard1of1.bin` is a binary file containing the weights of the model.
 - On the website, the model will error if there is regularization. Therefore, a workaround for me was to utilize the weights from a regularized model's `group1-shardof1.bin`, while using the `model.json` from a model of the same architecture without regularization
+- The Google Colab chinese_mnist.ipynb is intended to be run on Google Drive.
+- The dataset is not on github, so if you want to train the model you need to download it and move it into the `models/data` path!
+- The website will work without having to train the model, as the model has already been pretrained.
 
 ## License
 Copyright © 2023, Kane Li. Released under the MIT License.
