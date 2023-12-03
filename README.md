@@ -1,7 +1,7 @@
 # About
 This repository is for a Vercel hosted SvelteKit website. The premise of the website is to allow users to draw 15 different Chinese numerals, and a pretrained convolutional neural network will make predictions upon which of the 15 Chinese numerals it is. This repository has two main directories: model and website, as the convolutional neural network was trained using Tensorflow in a Google Colab notebook, then imported into the SvelteKit website.
 
-1. Model contains chinese_mnist.ipynb, which is the Google Colab notebook upon which the Neural Network was created and trained upon. The data directory contains the 15,000 images from the Kaggle Dataset, and the saved_models directory contains saved checkpoints for the model.
+1. Model contains chinese_mnist.ipynb, which is the Google Colab notebook upon which the Neural Network was created and trained upon. The data directory contains the 15,000 images from the Kaggle Dataset, and the saved_models directory contains saved checkpoints for the model. Here is a link to the [dataset](https://www.kaggle.com/datasets/gpreda/chinese-mnist).
 
 2. Website contains the SvelteKit directory necessary to host and run the website. To use it, simply change your directory to website/ with `cd website`, run `pnpm install` (or similar commands that achieve the same purpose), and then `pnpm run dev`.
 
@@ -13,7 +13,7 @@ This model was trained on a kaggle Chinese MNIST Dataset, linked [here](https://
 _Sample of 25 images from the dataset_
 
 ## Model Summary
-Ultimately, the model was able to obtain 97.8% accuracy on the test set, with 99% accuracy on the training data. While the accuracy could be improved and previous models were able to obtain up to 99% accuracy on the test set, it was found that this model was the more reliable on user-drawn input. The model consists of ten layers, as summarized here:
+Ultimately, the model was able to obtain 97.8% accuracy on the test set, with 99% accuracy on the training data. While the accuracy could be improved and previous models were able to obtain up to 99% accuracy on the test set, it was found that the 97.8% model was the more reliable on user-drawn input due to less overfitting. The model consists of ten layers, as summarized here:
 
 ```
 Model: "sequential_2"
@@ -84,6 +84,7 @@ _________________________________________________________________
 - The Google Colab chinese_mnist.ipynb is intended to be run on Google Drive.
 - The dataset is not on github, so if you want to train the model you need to download it and move it into the `models/data` path!
 - The website will work without having to train the model, as the model has already been pretrained.
+- I built this as a personal project to introduce myself to Machine Learning and applying it to Web Development. It's very fun :).
 
 ## License
 Copyright © 2023, Kane Li. Released under the MIT License.
