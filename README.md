@@ -13,7 +13,7 @@ This model was trained on a kaggle Chinese MNIST Dataset, linked [here](https://
 _Sample of 25 images from the dataset_
 
 ## Model Summary
-Ultimately, the model was able to obtain 97.8% accuracy on the test set, with 99% accuracy on the training data. While the accuracy could be improved and previous models were able to obtain up to 99% accuracy on the test set, it was found that the 97.8% model was the more reliable on user-drawn input due to less overfitting. The model consists of ten layers, as summarized here:
+Ultimately, the model was able to obtain 97.8% accuracy on the test set, with 99% accuracy on the training data. While the accuracy could be improved and previous models were able to obtain up to 99% accuracy on the test set, it was found that the 97.8% model was the more reliable on user-drawn input due to less overfitting. The model is custom designed and consists of ten layers, as summarized here:
 
 ```
 Model: "sequential_2"
