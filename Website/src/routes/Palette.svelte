@@ -1,3 +1,6 @@
+<!-- Palette menu from Svelte Docs. Allows users to select
+	 colors through which to draw with. -->
+
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -67,20 +70,6 @@
 		overflow-x: auto;
 	}
 	
-    /*
-	div::-webkit-scrollbar {
-		height: 0.25rem;
-	}
-
-	div::-webkit-scrollbar-track {
-		background: hsl(0, 0%, 100%);
-	}
-
-	div::-webkit-scrollbar-thumb {
-		background: currentColor;
-	}
-    */
-	
 	div button {
 		flex-shrink: 0;
 	}
@@ -103,8 +92,6 @@
 		border-radius: 50%;
 		margin: 0;
 	}
-
-	
 	
 	section > svg {
 		display: block;

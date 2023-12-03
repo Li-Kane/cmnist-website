@@ -1,3 +1,4 @@
+<!-- +page.svelte is the main page which the user sees -->
 <script>
 	import Canvas from './Canvas.svelte'
 	import Palette from './Palette.svelte'
@@ -22,25 +23,29 @@
 	let displayChart = false;
 	let scores = [];
 
+	/**
+	 * Function to get the image data from the canvas element and feed it into the model.
+	 * @returns {void}
+	 */
 	const getImageData = () => {
 		const originalCanvas = document.getElementById("drawing");
-		// Create a new canvas element with a 64x64 size
+		// Create a new canvas element with a 64x64 size to feed into the model
 		const resizedCanvas = document.createElement('canvas');
-    	resizedCanvas.width = 64;
-    	resizedCanvas.height = 64;
+		resizedCanvas.width = 64;
+		resizedCanvas.height = 64;
 		const resizedContext = resizedCanvas.getContext('2d');
-    	resizedContext.drawImage(originalCanvas, 0, 0, 64, 64);
+		resizedContext.drawImage(originalCanvas, 0, 0, 64, 64);
 		const imageData = resizedContext.getImageData(0, 0, 64, 64);
-		//This block is to visualize the resized image input
+		// Uncomment this to see the resized image sent to the model
 		/*
 		const context = originalCanvas.getContext('2d');
 		context.strokeRect(0, 0, 64, 64);
 		context.putImageData(imageData, 1, 1);
 		*/
-		//reshape data into (1, 64, 64, 3) tensor
+		// Reshape data into (1, 64, 64, 3) tensor
 		let reshapedData = reshapeData(imageData);
 		scores = model.getScores(reshapedData);
-		if(scores){
+		if (scores) {
 			displayChart = true;
 		}
 	}
@@ -55,23 +60,27 @@
 </script>
 
 <main>
-	<div id='header'>
-		<h1 class="text-5xl font-extrabold dark:text-white">CMNIST Predictor</h1>
-		<p>Draw a character and a convolutional neural network will make a prediction!
-			It will attempt to classify according to the classes in the slider below.
-		</p>
-	</div>
-	<Marquee class='image-slider' pauseOnHover={true} speed={50} 
-	play={true} gradient={true} --gradientColor='#e5e5e5'>
-		{#each preloadImageUrls as path, index}
-			<div class='character'>
-				<img src='{path}' alt='{index}.png' />
-				<div class='label'>
-					<h1>{labels[index]}</h1>
+	<div class='canvas-header'>
+		<div id='header'>
+			<h1 class="text-5xl font-extrabold dark:text-white">CMNIST Predictor</h1>
+			<p>Draw a character and a convolutional neural network will make a prediction!
+				It will attempt to classify according to the classes in the slider below.
+				If you're curious to learn more, check out this github link 
+				<a href="https://github.com/Li-Kane/cmnist-website" target="_blank">here</a>!
+			</p>
+		</div>
+		<Marquee class='image-slider' pauseOnHover={true} speed={50} 
+		play={true} gradient={true} --gradientColor='#e5e5e5'>
+			{#each preloadImageUrls as path, index}
+				<div class='character'>
+					<img src='{path}' alt='{index}.png' />
+					<div class='label'>
+						<h1>{labels[index]}</h1>
+					</div>
 				</div>
-			</div>
-		{/each}
-	</Marquee>
+			{/each}
+		</Marquee>
+	</div>
 	<div class='drawing'>
 		<Canvas bind:this={canvasChild}
 					{color} 
@@ -89,13 +98,15 @@
 	</div>
 	<button id='prediction-btn' class="text-white font-bold py-2 px-4 rounded" on:click={getImageData}>
 		Make a Prediction!
-	  </button>
-	{#if displayChart}
-		<div class='prediction'>
-			<h2>Prediction: {model.getPrediction(scores)[0]} ({model.getPrediction(scores)[1]}%)</h2>
-		</div>
-		<Chart {scores}/>
-	{/if}
+	</button>
+	<div id='chart-container'> 
+		{#if displayChart}
+			<div class='prediction'>
+				<h2>Prediction: {model.getPrediction(scores)[0]} ({model.getPrediction(scores)[1]}%)</h2>
+			</div>
+			<Chart {scores}/>
+		{/if}
+	</div>
 	<p id='credit'>Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a></p>
 </main>
 
@@ -120,8 +131,32 @@
 		white-space: nowrap;
 	}
 
+	a {
+    	color: blue; /* Or any color you prefer */
+    	text-decoration: underline; /* This adds the underline back */
+	}
+
+	.canvas-header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem 0;
+		min-width: 256px;
+		max-width: 40%;
+		margin-top: 50px;
+	}
+
+	#chart-container {
+		position: relative;
+		width: 80vw;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
 	main {
-		max-width: 500px;
+		width: 100%;
+		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem 0;
@@ -133,7 +168,6 @@
 	}
 
 	#header {
-		padding: 10vh 0px 2vh;
 		align-self: center;
 		text-align: center;
 	}
@@ -156,8 +190,8 @@
 	}
 
 	#credit {
-		position: absolute;
-		bottom: 2%;
+		position: fixed;
+		top: 2%;
 		right: 2%;
 	}
 

@@ -1,3 +1,6 @@
+/* Imported model using TensorflowJS. The imported model can be found in 
+   C:\Users\kanel\OneDrive\Desktop\Code\Website\cmnist-website\Website\static\model*/
+
 import * as tf from '@tensorflow/tfjs'
 
 class Model {
@@ -9,6 +12,10 @@ class Model {
         this.loadModel();
     }
 
+	/**
+	 * Loads the model from the specified path and prints its summary.
+	 * @returns {Promise<void>} A promise that resolves when the model is loaded.
+	 */
     async loadModel() {
 		try {
 			this.model = await tf.loadLayersModel("model/model.json");
@@ -19,6 +26,11 @@ class Model {
 		}
 	}
 
+	/**
+	 * Calculates and returns the scores for the given input.
+	 * @param {any} input - The input data for prediction.
+	 * @returns {any} The scores calculated for the input.
+	 */
     getScores = (input) => {
 		try {
 			let scores = this.model.predict(input);
@@ -30,6 +42,11 @@ class Model {
 		}
 	}
 
+	/**
+	 * Calculates the prediction based on the given scores.
+	 * @param {Tensor} scores - The scores obtained from the model.
+	 * @returns {Array} - An array containing the predicted label and the prediction value.
+	 */
 	getPrediction = (scores) => {
 		let scoreArr = scores.arraySync()['0'];
 		let indexOfMaxValue = scoreArr.reduce((bestIdx, currElem, currIdx, scoreArr) => currElem > scoreArr[bestIdx] ? currIdx : bestIdx, 0);

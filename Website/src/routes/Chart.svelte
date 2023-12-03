@@ -1,3 +1,5 @@
+<!-- Chart that dispays model score predictions-->
+
 <script>
     import * as tf from '@tensorflow/tfjs'
     import Chart from 'chart.js/auto';
@@ -5,10 +7,23 @@
     
     export let scores;
 
+	/**
+	 * Mounts the chart component and initializes the chart using ctx, which
+	 * is the canvas drawing, and config, which is the chart configuration.
+	 * Also calculates the prediction using the scores array.
+	 */
+	onMount(() => {
+		const ctx = portfolio.getContext('2d');
+		var myChart = new Chart(ctx, config);
+		let prediction = tf.argMax(scores);
+	})
+
     let portfolio;
 	const labels = ['零', '一', '二', '三', '四',
                     '五', '六', '七', '八', '九',
                     '十', '百', '千', '万', '亿'];
+	
+	/* The data and settings for the chart*/
 	const data = {
 	labels: labels,
 	datasets: [{
@@ -53,6 +68,7 @@
 		borderWidth: 1
 	}]
 	};
+	/* Configurations for displayed chart*/
 	const config = {
 		type: 'bar',
 		data: data,
@@ -69,15 +85,9 @@
                     }
                 }
 			},
+			responsive: true,
 		},
 	};
-
-    onMount(() => {
-		const ctx = portfolio.getContext('2d');
-        // Initialize chart using default config set
-        var myChart = new Chart(ctx, config);
-        let prediction = tf.argMax(scores);
-	})
 </script>
 
 <canvas bind:this={portfolio} />
