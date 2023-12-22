@@ -37,11 +37,11 @@
 		resizedContext.drawImage(originalCanvas, 0, 0, 64, 64);
 		const imageData = resizedContext.getImageData(0, 0, 64, 64);
 		// Uncomment this to see the resized image sent to the model
-		
+		/*
 		const context = originalCanvas.getContext('2d');
 		context.strokeRect(0, 0, 64, 64);
 		context.putImageData(imageData, 1, 1);
-		
+		*/
 		// Reshape data into (1, 64, 64, 3) tensor
 		let reshapedData = reshapeData(imageData);
 		scores = model.getScores(reshapedData);
