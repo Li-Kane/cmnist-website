@@ -62,6 +62,7 @@
 </script>
 
 <main>
+	<!-- Vectors and icons by https://www.svgrepo.com -->
 	<div class='canvas-header'>
 		<div id='header'>
 			<h1 class="text-5xl font-extrabold dark:text-white">CMNIST Predictor</h1>
@@ -109,7 +110,6 @@
 			<Chart {scores}/>
 		{/if}
 	</div>
-	<p id='credit'>Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a></p>
 </main>
 
 <style>	
